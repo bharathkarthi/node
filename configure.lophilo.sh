@@ -7,22 +7,21 @@ export PATH=$HOME/lophilo/codesourcery/arm926ej-s:$PATH
 
 # 
 ./configure \
-	--prefix=./lophilo \
+	--prefix=/usr/local \
 	--dest-cpu=arm \
 	--dest-os=linux \
 	--with-arm-float-abi=softfp \
 	--without-snapshot
 
-# need dev libs installed
-#	--shared-openssl \
-#	--shared-openssl-includes=$HOME/lophilo.nfs/usr/include \
-#	--shared-openssl-libpath=$HOME/lophilo.nfs/usr/lib \
-
-# need dev libs instlaled
-#	--shared-zlib \
-#	--shared-zlib-includes=$HOME/lophilo.nfs/usr/include \
-#	--shared-zlib-libpath=$HOME/lophilo.nfs/usr/lib
-
+echo "don't forget to: export PATH=\$HOME/lophilo/codesourcery/arm926ej-s:\$PATH"
+# there's a compiler / libraries mismatch between ubuntu and debian
+# that prevent us from cross-compiling
+	# --shared-zlib \
+	# --shared-zlib-includes=$HOME/lophilo.nfs/usr/include \
+	# --shared-zlib-libpath=$HOME/lophilo.nfs/usr/lib/arm-linux-gnueabi	\
+	# --shared-openssl \
+	# --shared-openssl-includes=$HOME/lophilo.nfs/usr/include \
+	# --shared-openssl-libpath=$HOME/lophilo.nfs/usr/lib/arm-linux-gnueabi \
 
 # debian currently at version libv8-3.8.9 which is apparently too old
 # error: 'class v8::String' has no member named 'MayContainNonAscii

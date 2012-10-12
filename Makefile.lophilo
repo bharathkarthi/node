@@ -1,0 +1,29 @@
+V ?= 1
+PYTHON ?= python
+VERSION=v$(shell $(PYTHON) tools/getnodeversion.py)
+RELEASE=$(shell $(PYTHON) tools/getnodeisrelease.py)
+TARNAME=node-$(VERSION)
+PLATFORM:=lophilo
+ARCH:=arm
+BINARYNAME=$(TARNAME)-$(PLATFORM)-$(ARCH)
+BINARYTAR=$(BINARYNAME).tar.gz
+
+all: $(BINARYTAR) 
+
+lophilo-configure:
+	./configure \
+		--prefix=/usr/local \
+		--dest-cpu=arm \
+		--dest-os=linux \
+		--with-arm-float-abi=softfp \
+		--without-snapshot
+
+$(BINARYTAR): lophilo-configure
+	rm -rf $(BINARYNAME)
+	$(MAKE) install DESTDIR=$(BINARYNAME) V=$(V) PORTABLE=1
+	cp README.md $(BINARYNAME)
+	cp LICENSE $(BINARYNAME)
+	cp ChangeLog $(BINARYNAME)
+	tar -cf $(BINARYNAME).tar $(BINARYNAME)
+	rm -rf $(BINARYNAME)
+	gzip -f -9 $(BINARYNAME).tar
